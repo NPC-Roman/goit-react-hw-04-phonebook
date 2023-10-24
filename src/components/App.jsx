@@ -99,16 +99,13 @@ function App() {
   const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
 
+  /*
   useEffect(() => {
     loadContactsFromLocalStorage();
   }, []);
 
   useEffect(() => {
-    const saveContacts = () => {
-      localStorage.setItem('contacts', JSON.stringify(contacts));
-    };
-
-    saveContacts();
+    saveContactsToLocalStorage();
   }, [contacts]);
 
   const loadContactsFromLocalStorage = () => {
@@ -124,6 +121,33 @@ function App() {
 
   const saveContactsToLocalStorage = () => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
+  };
+*/
+  useEffect(() => {
+    loadContactsFromLocalStorage();
+  }, []);
+
+  useEffect(() => {
+    saveContactsToLocalStorage();
+  }, [contacts]);
+
+  const loadContactsFromLocalStorage = () => {
+    try {
+      const storedContacts = JSON.parse(localStorage.getItem('contacts'));
+      if (storedContacts) {
+        setContacts(storedContacts);
+      }
+    } catch (error) {
+      console.error('Error loading contacts from local storage:', error);
+    }
+  };
+
+  const saveContactsToLocalStorage = () => {
+    try {
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+    } catch (error) {
+      console.error('Error saving contacts to local storage:', error);
+    }
   };
 
   const handleAddContact = newContact => {
