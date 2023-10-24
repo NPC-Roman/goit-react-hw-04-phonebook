@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import shortid from 'shortid';
 import css from './Form.module.css';
 
