@@ -104,7 +104,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    saveContactsToLocalStorage();
+    const saveContacts = () => {
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+    };
+
+    saveContacts();
   }, [contacts]);
 
   const loadContactsFromLocalStorage = () => {
