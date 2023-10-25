@@ -4,30 +4,11 @@ import Filter from './Filter/Filter';
 import Form from './Form';
 
 function App() {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(() => JSON.parse(localStorage.getItem('contacts')) || []);
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    const loadContactsFromLocalStorage = () => {
-      try {
-        const storedContacts = JSON.parse(localStorage.getItem('contacts'));
-        if (storedContacts) {
-          setContacts(storedContacts);
-        }
-      } catch (error) {
-        console.error('Error loading contacts from local storage:', error);
-      }
-    };
-
-    loadContactsFromLocalStorage();
-  }, []);
-
-  useEffect(() => {
-    const saveContactsToLocalStorage = () => {
       localStorage.setItem('contacts', JSON.stringify(contacts));
-    };
-
-    saveContactsToLocalStorage();
   }, [contacts]);
 
   const handleAddContact = newContact => {
@@ -37,9 +18,9 @@ function App() {
       )
     ) {
       alert(`${newContact.name} is already in contacts`);
-    } else {
-      setContacts(prevContacts => [...prevContacts, newContact]);
+      return; 
     }
+    setContacts(prevContacts => [...prevContacts, newContact]);
   };
 
   const handleFilterContact = event => {
