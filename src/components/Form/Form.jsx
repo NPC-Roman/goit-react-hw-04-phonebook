@@ -29,10 +29,11 @@ function Form({ addToContact }) {
   const onSubmitForm = evt => {
     evt.preventDefault();
 
-  const addToContact = ({ id, name, number }) => {
-      setContacts(prevContacts => [...prevContacts, { id, name, number }]);
-    };
-    resetForm();
+    addToContact({
+      id: shortid.generate(),
+      name: formData.name,
+      number: formData.number,
+    });
   };
 
   return (
